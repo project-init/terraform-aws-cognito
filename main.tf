@@ -61,6 +61,7 @@ resource "aws_cognito_user_pool_client" "user_pool" {
 
   callback_urls                = var.callback_urls
   supported_identity_providers = var.google_auth != null ? ["COGNITO", "Google"] : ["COGNITO"]
+  allowed_oauth_flows          = ["code"]
   allowed_oauth_scopes         = var.google_auth != null ? split(" ", var.google_auth.authorized_scopes) : ["openid", "email"]
 }
 
