@@ -50,7 +50,7 @@ resource "aws_cognito_user_pool" "user_pool" {
 }
 
 resource "aws_cognito_user_pool_client" "user_pool" {
-  name = "${var.environment}-${var.service_name}-client"
+  name = "${var.environment}-${var.service_name}"
 
   user_pool_id = aws_cognito_user_pool.user_pool.id
   explicit_auth_flows = [
