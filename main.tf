@@ -58,12 +58,6 @@ resource "aws_cognito_user_pool_client" "user_pool" {
     "ALLOW_USER_AUTH",
     "ALLOW_REFRESH_TOKEN_AUTH",
   ]
-
-  token_validity_units {
-    access_token  = "minutes"
-    id_token      = "minutes"
-    refresh_token = "hours"
-  }
 }
 
 resource "aws_cognito_user_pool_domain" "user_pool" {
