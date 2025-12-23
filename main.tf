@@ -62,7 +62,7 @@ resource "aws_cognito_user_pool_client" "user_pool" {
   token_validity_units {
     access_token  = "minutes"
     id_token      = "minutes"
-    refresh_token = "days"
+    refresh_token = "hours"
   }
 }
 
