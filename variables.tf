@@ -35,7 +35,7 @@ variable "user_pool_tier" {
 ########################################################################################################################
 
 variable "callback_urls" {
-  type = set(string)
+  type        = set(string)
   description = "Set of URLs allowed for callback. Needs to also be set in your google oauth app."
 }
 
