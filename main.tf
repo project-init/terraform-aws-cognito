@@ -66,6 +66,11 @@ resource "aws_cognito_user_pool_client" "user_pool" {
   }
 }
 
+resource "aws_cognito_user_pool_domain" "user_pool" {
+  domain       = "${var.environment}-${var.service_name}"
+  user_pool_id = aws_cognito_user_pool.user_pool.id
+}
+
 resource "aws_cognito_identity_provider" "google" {
   count = var.google_auth != null ? 1 : 0
 
