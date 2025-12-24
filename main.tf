@@ -64,10 +64,11 @@ resource "aws_cognito_user_pool_client" "user_pool" {
     "ALLOW_REFRESH_TOKEN_AUTH",
   ]
 
-  callback_urls                = var.callback_urls
-  supported_identity_providers = concat(local.cognito_identity_providers, local.google_identity_providers)
-  allowed_oauth_flows          = ["code"]
-  allowed_oauth_scopes         = var.google_auth != null ? split(" ", var.google_auth.authorized_scopes) : ["openid", "email"]
+  callback_urls                        = var.callback_urls
+  supported_identity_providers         = concat(local.cognito_identity_providers, local.google_identity_providers)
+  allowed_oauth_flows_user_pool_client = true
+  allowed_oauth_flows                  = ["code"]
+  allowed_oauth_scopes                 = var.google_auth != null ? split(" ", var.google_auth.authorized_scopes) : ["openid", "email"]
 }
 
 resource "aws_cognito_user_pool_domain" "user_pool" {
