@@ -39,11 +39,13 @@ No modules.
 | [aws_cognito_identity_provider.google](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cognito_identity_provider) | resource |
 | [aws_cognito_user_pool.user_pool](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cognito_user_pool) | resource |
 | [aws_cognito_user_pool_client.user_pool](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cognito_user_pool_client) | resource |
+| [aws_cognito_user_pool_domain.user_pool](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cognito_user_pool_domain) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_callback_urls"></a> [callback\_urls](#input\_callback\_urls) | Set of URLs allowed for callback. Needs to also be set in your google oauth app. | `set(string)` | n/a | yes |
 | <a name="input_enable_deletion_protection"></a> [enable\_deletion\_protection](#input\_enable\_deletion\_protection) | Whether to enable or disable deletion protection. | `bool` | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | The environment to deploy cognito in. | `string` | n/a | yes |
 | <a name="input_google_auth"></a> [google\_auth](#input\_google\_auth) | n/a | <pre>object({<br/>    client_id         = string<br/>    client_secret     = string<br/>    authorized_scopes = optional(string, "openid profile email")<br/>  })</pre> | n/a | yes |

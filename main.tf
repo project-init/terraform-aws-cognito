@@ -1,3 +1,8 @@
+locals {
+  cognito_identity_providers = ["COGNITO"]
+  google_identity_providers  = var.google_auth != null ? ["Google"] : []
+}
+
 resource "aws_cognito_user_pool" "user_pool" {
   name = "${var.environment}-${var.service_name}-user-pool"
 
@@ -50,7 +55,7 @@ resource "aws_cognito_user_pool" "user_pool" {
 }
 
 resource "aws_cognito_user_pool_client" "user_pool" {
-  name = "${var.environment}-${var.service_name}-client"
+  name = "${var.environment}-${var.service_name}"
 
   user_pool_id = aws_cognito_user_pool.user_pool.id
   explicit_auth_flows = [
@@ -59,11 +64,16 @@ resource "aws_cognito_user_pool_client" "user_pool" {
     "ALLOW_REFRESH_TOKEN_AUTH",
   ]
 
-  token_validity_units {
-    access_token  = "minutes"
-    id_token      = "minutes"
-    refresh_token = "days"
-  }
+  callback_urls                        = var.callback_urls
+  supported_identity_providers         = concat(local.cognito_identity_providers, local.google_identity_providers)
+  allowed_oauth_flows_user_pool_client = true
+  allowed_oauth_flows                  = ["code"]
+  allowed_oauth_scopes                 = var.google_auth != null ? split(" ", var.google_auth.authorized_scopes) : ["openid", "email"]
+}
+
+resource "aws_cognito_user_pool_domain" "user_pool" {
+  domain       = "${var.environment}-${var.service_name}"
+  user_pool_id = aws_cognito_user_pool.user_pool.id
 }
 
 resource "aws_cognito_identity_provider" "google" {
