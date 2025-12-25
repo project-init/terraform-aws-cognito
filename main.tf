@@ -42,11 +42,14 @@ resource "aws_cognito_user_pool" "user_pool" {
     }
   }
 
-  schema {
-    attribute_data_type = "Boolean"
-    name                = "db_created"
-    mutable             = true // Must be mutable as it is updated after the account is confirmed.
-    required            = false
+  dynamic "schema" {
+    for_each = var.custom_attributes
+    content {
+      attribute_data_type = schema.value.data_type
+      name                = "custom:${schema.value.name}"
+      mutable             = schema.value.mutable
+      required            = schema.value.required
+    }
   }
 }
 
