@@ -43,14 +43,10 @@ resource "aws_cognito_user_pool" "user_pool" {
   }
 
   schema {
-    attribute_data_type = "String"
-    name                = "user_uuid"
-    mutable             = false
+    attribute_data_type = "Boolean"
+    name                = "db_created"
+    mutable             = true // Must be mutable as it is updated after the account is confirmed.
     required            = false
-    string_attribute_constraints {
-      min_length = 36
-      max_length = 36
-    }
   }
 }
 
