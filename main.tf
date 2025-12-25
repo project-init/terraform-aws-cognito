@@ -42,14 +42,13 @@ resource "aws_cognito_user_pool" "user_pool" {
     }
   }
 
-  schema {
-    attribute_data_type = "String"
-    name                = "user_uuid"
-    mutable             = false
-    required            = false
-    string_attribute_constraints {
-      min_length = 36
-      max_length = 36
+  dynamic "schema" {
+    for_each = var.custom_attributes
+    content {
+      attribute_data_type = schema.value.data_type
+      name                = schema.value.name
+      mutable             = schema.value.mutable
+      required            = schema.value.required
     }
   }
 }
