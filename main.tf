@@ -46,7 +46,7 @@ resource "aws_cognito_user_pool" "user_pool" {
     for_each = var.custom_attributes
     content {
       attribute_data_type = schema.value.data_type
-      name                = "custom:${schema.value.name}"
+      name                = schema.value.name
       mutable             = schema.value.mutable
       required            = schema.value.required
     }
