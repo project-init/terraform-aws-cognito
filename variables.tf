@@ -60,3 +60,13 @@ variable "google_auth" {
   })
   sensitive = true
 }
+
+########################################################################################################################
+### Managed Login
+########################################################################################################################
+
+variable "cognito_via_managed_login" {
+  default     = false
+  type        = bool
+  description = "Whether to add Email/Password to the managed login screen."
+}

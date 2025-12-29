@@ -46,6 +46,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_callback_urls"></a> [callback\_urls](#input\_callback\_urls) | Set of URLs allowed for callback. Needs to also be set in your google oauth app. | `set(string)` | n/a | yes |
+| <a name="input_cognito_via_managed_login"></a> [cognito\_via\_managed\_login](#input\_cognito\_via\_managed\_login) | Whether to add Email/Password to the managed login screen. | `bool` | `false` | no |
 | <a name="input_custom_attributes"></a> [custom\_attributes](#input\_custom\_attributes) | n/a | <pre>set(object({<br/>    data_type = string<br/>    mutable   = bool<br/>    name      = string<br/>    required  = bool<br/>  }))</pre> | n/a | yes |
 | <a name="input_enable_deletion_protection"></a> [enable\_deletion\_protection](#input\_enable\_deletion\_protection) | Whether to enable or disable deletion protection. | `bool` | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | The environment to deploy cognito in. | `string` | n/a | yes |
