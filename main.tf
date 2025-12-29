@@ -1,5 +1,5 @@
 locals {
-  cognito_identity_providers = ["COGNITO"]
+  cognito_identity_providers = var.cognito_via_managed_login ? ["COGNITO"] : []
   google_identity_providers  = var.google_auth != null ? ["Google"] : []
 }
 
