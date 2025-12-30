@@ -7,3 +7,8 @@ output "user_pool_id" {
   value       = aws_cognito_user_pool.user_pool.id
   description = "The ID of the user pool."
 }
+
+output "endpoint" {
+  value       = aws_cognito_user_pool.user_pool.endpoint
+  description = "The Endpoint of the user pool."
+}
