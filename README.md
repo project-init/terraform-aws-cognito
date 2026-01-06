@@ -7,7 +7,14 @@
 
 ## Usage
 
+### Terraform
+
 Check our [Examples](examples) for full usage information.
+
+### Golang
+
+Check out our [gommon package](https://github.com/project-init/gommon/blob/main/pkg/auth/cognito.go) which is meant to
+be used in conjunction with this module to ensure the environment setup is linked.
 
 ## Useful Docs
 
@@ -60,5 +67,6 @@ No modules.
 |------|-------------|
 | <a name="output_client_id"></a> [client\_id](#output\_client\_id) | The ID of the client for the user pool. |
 | <a name="output_endpoint"></a> [endpoint](#output\_endpoint) | The Endpoint of the user pool. |
+| <a name="output_env_variables"></a> [env\_variables](#output\_env\_variables) | n/a |
 | <a name="output_user_pool_id"></a> [user\_pool\_id](#output\_user\_pool\_id) | The ID of the user pool. |
 <!-- END_TF_DOCS -->

@@ -12,3 +12,16 @@ output "endpoint" {
   value       = aws_cognito_user_pool.user_pool.endpoint
   description = "The Endpoint of the user pool."
 }
+
+output "env_variables" {
+  value = [
+    {
+      name  = "COGNITO_CLIENT_ID"
+      value = aws_cognito_user_pool_client.user_pool.id
+    },
+    {
+      name  = "COGNITO_USER_POOL_ID"
+      value = aws_cognito_user_pool.user_pool.id
+    },
+  ]
+}
