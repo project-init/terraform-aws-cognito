@@ -23,5 +23,9 @@ output "env_variables" {
       name  = "COGNITO_USER_POOL_ID"
       value = aws_cognito_user_pool.user_pool.id
     },
+    {
+      name  = "COGNITO_ISSUER_URL"
+      value = "https://${aws_cognito_user_pool.user_pool.endpoint}"
+    },
   ]
 }
