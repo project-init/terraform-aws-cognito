@@ -47,6 +47,8 @@ No modules.
 | [aws_cognito_user_pool.user_pool](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cognito_user_pool) | resource |
 | [aws_cognito_user_pool_client.user_pool](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cognito_user_pool_client) | resource |
 | [aws_cognito_user_pool_domain.user_pool](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cognito_user_pool_domain) | resource |
+| [aws_iam_policy.cognito](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_policy_document.user_pool](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 
 ## Inputs
 
@@ -66,7 +68,9 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_client_id"></a> [client\_id](#output\_client\_id) | The ID of the client for the user pool. |
+| <a name="output_cognito_policy_arn"></a> [cognito\_policy\_arn](#output\_cognito\_policy\_arn) | The ARN of the user pool. |
 | <a name="output_endpoint"></a> [endpoint](#output\_endpoint) | The Endpoint of the user pool. |
 | <a name="output_env_variables"></a> [env\_variables](#output\_env\_variables) | n/a |
+| <a name="output_user_pool_arn"></a> [user\_pool\_arn](#output\_user\_pool\_arn) | The ARN of the user pool. |
 | <a name="output_user_pool_id"></a> [user\_pool\_id](#output\_user\_pool\_id) | The ID of the user pool. |
 <!-- END_TF_DOCS -->

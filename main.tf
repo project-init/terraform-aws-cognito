@@ -103,3 +103,21 @@ resource "aws_cognito_identity_provider" "google" {
     username     = "sub"
   }
 }
+
+data "aws_iam_policy_document" "user_pool" {
+  version = "2012-10-17"
+  statement {
+    effect = "Allow"
+    actions = [
+      "cognito-idp:AdminUpdateUserAttributes",
+    ]
+    resources = [
+      aws_cognito_user_pool.user_pool.arn
+    ]
+  }
+}
+
+resource "aws_iam_policy" "cognito" {
+  name   = "${var.service_name}-${var.environment}-user-pool-policy"
+  policy = data.aws_iam_policy_document.user_pool.json
+}

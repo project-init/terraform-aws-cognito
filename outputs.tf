@@ -8,6 +8,16 @@ output "user_pool_id" {
   description = "The ID of the user pool."
 }
 
+output "user_pool_arn" {
+  value       = aws_cognito_user_pool.user_pool.arn
+  description = "The ARN of the user pool."
+}
+
+output "cognito_policy_arn" {
+  value       = aws_iam_policy.cognito.arn
+  description = "The ARN of the user pool."
+}
+
 output "endpoint" {
   value       = aws_cognito_user_pool.user_pool.endpoint
   description = "The Endpoint of the user pool."
