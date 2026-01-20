@@ -27,3 +27,8 @@ module "cognito" {
     var.add_localhost_auth_callback_url ? "localhost_callback_url" : ""
   ])
 }
+
+resource "aws_iam_role_policy_attachment" "cognito_update_user_attributes" {
+  role       = module.api.service_iam_role_name
+  policy_arn = module.cognito.cognito_policy_arn
+}
