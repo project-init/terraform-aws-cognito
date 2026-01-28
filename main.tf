@@ -110,6 +110,7 @@ data "aws_iam_policy_document" "user_pool" {
     effect = "Allow"
     actions = [
       "cognito-idp:AdminUpdateUserAttributes",
+      "cognito-idp:ListUsers"
     ]
     resources = [
       aws_cognito_user_pool.user_pool.arn
