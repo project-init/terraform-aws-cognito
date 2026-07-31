@@ -21,6 +21,12 @@ module "cognito" {
     client_id     = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["googleOauth2ClientId"]
     client_secret = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["googleOauth2ClientSecret"]
   }
+  apple_auth = {
+    client_id   = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["appleServicesId"]
+    team_id     = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["appleTeamId"]
+    key_id      = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["appleKeyId"]
+    private_key = jsondecode(data.aws_secretsmanager_secret_version.secret.secret_string)["applePrivateKey"]
+  }
 
   callback_urls = compact([
     "callback_url",
