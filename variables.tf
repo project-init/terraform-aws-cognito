@@ -61,6 +61,19 @@ variable "google_auth" {
   sensitive = true
 }
 
+variable "apple_auth" {
+  type = object({
+    client_id         = string # the Sign in with Apple Services ID
+    team_id           = string
+    key_id            = string
+    private_key       = string # the .p8 key contents
+    authorized_scopes = optional(string, "email name")
+  })
+  description = "Sign in with Apple provider credentials. Null omits the Apple identity provider."
+  default     = null
+  sensitive   = true
+}
+
 ########################################################################################################################
 ### Managed Login
 ########################################################################################################################

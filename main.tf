@@ -1,6 +1,7 @@
 locals {
   cognito_identity_providers = var.cognito_via_managed_login ? ["COGNITO"] : []
   google_identity_providers  = var.google_auth != null ? ["Google"] : []
+  apple_identity_providers   = var.apple_auth != null ? ["SignInWithApple"] : []
 }
 
 resource "aws_cognito_user_pool" "user_pool" {
@@ -64,7 +65,7 @@ resource "aws_cognito_user_pool_client" "user_pool" {
   ]
 
   callback_urls                        = var.callback_urls
-  supported_identity_providers         = concat(local.cognito_identity_providers, local.google_identity_providers)
+  supported_identity_providers         = concat(local.cognito_identity_providers, local.google_identity_providers, local.apple_identity_providers)
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["code"]
   allowed_oauth_scopes                 = var.google_auth != null ? split(" ", var.google_auth.authorized_scopes) : ["openid", "email"]
@@ -101,6 +102,29 @@ resource "aws_cognito_identity_provider" "google" {
     phone_number = "phoneNumbers"
     birthdate    = "birthdays"
     username     = "sub"
+  }
+}
+
+resource "aws_cognito_identity_provider" "apple" {
+  count = var.apple_auth != null ? 1 : 0
+
+  user_pool_id  = aws_cognito_user_pool.user_pool.id
+  provider_name = "SignInWithApple"
+  provider_type = "SignInWithApple"
+
+  provider_details = {
+    authorize_scopes = var.apple_auth.authorized_scopes
+    client_id        = var.apple_auth.client_id
+    team_id          = var.apple_auth.team_id
+    key_id           = var.apple_auth.key_id
+    private_key      = var.apple_auth.private_key
+  }
+
+  # Apple returns email in the id_token and the name only on first authorization (outside the
+  # token), so only the stable claims are mapped here.
+  attribute_mapping = {
+    email    = "email"
+    username = "sub"
   }
 }
 

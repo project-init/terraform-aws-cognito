@@ -25,14 +25,14 @@ be used in conjunction with this module to ensure the environment setup is linke
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.81.0 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.81.0 |
 
 ## Modules
@@ -42,7 +42,8 @@ No modules.
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
+| [aws_cognito_identity_provider.apple](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cognito_identity_provider) | resource |
 | [aws_cognito_identity_provider.google](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cognito_identity_provider) | resource |
 | [aws_cognito_user_pool.user_pool](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cognito_user_pool) | resource |
 | [aws_cognito_user_pool_client.user_pool](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cognito_user_pool_client) | resource |
@@ -53,7 +54,8 @@ No modules.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
+| <a name="input_apple_auth"></a> [apple\_auth](#input\_apple\_auth) | Sign in with Apple provider credentials. Null omits the Apple identity provider. | <pre>object({<br/>    client_id         = string # the Sign in with Apple Services ID<br/>    team_id           = string<br/>    key_id            = string<br/>    private_key       = string # the .p8 key contents<br/>    authorized_scopes = optional(string, "email name")<br/>  })</pre> | `null` | no |
 | <a name="input_callback_urls"></a> [callback\_urls](#input\_callback\_urls) | Set of URLs allowed for callback. Needs to also be set in your google oauth app. | `set(string)` | n/a | yes |
 | <a name="input_cognito_via_managed_login"></a> [cognito\_via\_managed\_login](#input\_cognito\_via\_managed\_login) | Whether to add Email/Password to the managed login screen. | `bool` | `false` | no |
 | <a name="input_custom_attributes"></a> [custom\_attributes](#input\_custom\_attributes) | n/a | <pre>set(object({<br/>    data_type = string<br/>    mutable   = bool<br/>    name      = string<br/>    required  = bool<br/>  }))</pre> | n/a | yes |
@@ -66,7 +68,7 @@ No modules.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_client_id"></a> [client\_id](#output\_client\_id) | The ID of the client for the user pool. |
 | <a name="output_cognito_policy_arn"></a> [cognito\_policy\_arn](#output\_cognito\_policy\_arn) | The ARN of the user pool. |
 | <a name="output_endpoint"></a> [endpoint](#output\_endpoint) | The Endpoint of the user pool. |
