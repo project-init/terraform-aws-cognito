@@ -69,6 +69,11 @@ resource "aws_cognito_user_pool_client" "user_pool" {
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["code"]
   allowed_oauth_scopes                 = var.google_auth != null ? split(" ", var.google_auth.authorized_scopes) : ["openid", "email"]
+
+  # supported_identity_providers lists providers by name without referencing their resources, so
+  # Terraform has no ordering edge to them. Cognito rejects a client that names a provider before it
+  # exists, so pin the ordering explicitly.
+  depends_on = [aws_cognito_identity_provider.google, aws_cognito_identity_provider.apple]
 }
 
 resource "aws_cognito_user_pool_domain" "user_pool" {
@@ -120,11 +125,14 @@ resource "aws_cognito_identity_provider" "apple" {
     private_key      = var.apple_auth.private_key
   }
 
-  # Apple returns email in the id_token and the name only on first authorization (outside the
-  # token), so only the stable claims are mapped here.
+  # The user pool marks given_name and family_name required, so the mapping must supply them or
+  # CreateIdentityProvider is rejected. Apple returns the name only on the first authorization (via
+  # the requested name scope) and Cognito captures it there; email and sub are the stable claims.
   attribute_mapping = {
-    email    = "email"
-    username = "sub"
+    email       = "email"
+    given_name  = "given_name"
+    family_name = "family_name"
+    username    = "sub"
   }
 }
 
