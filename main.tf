@@ -70,6 +70,13 @@ resource "aws_cognito_user_pool_client" "user_pool" {
   allowed_oauth_flows                  = ["code"]
   allowed_oauth_scopes                 = var.google_auth != null ? split(" ", var.google_auth.authorized_scopes) : ["openid", "email"]
 
+  # Pinned rather than left to default. A federated account never takes the email sign-in alias, so an
+  # account that federated first and added a password later can only authenticate by its provider
+  # username; callers recover by catching UserNotFoundException and resolving the email to that
+  # username. ENABLED collapses that into NotAuthorizedException, which would silently strip email
+  # sign-in from those accounts. Hardening this is a deliberate trade against that flow, not a flip.
+  prevent_user_existence_errors = "LEGACY"
+
   # supported_identity_providers lists providers by name without referencing their resources, so
   # Terraform has no ordering edge to them. Cognito rejects a client that names a provider before it
   # exists, so pin the ordering explicitly.
