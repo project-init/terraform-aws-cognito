@@ -148,6 +148,9 @@ data "aws_iam_policy_document" "user_pool" {
   statement {
     effect = "Allow"
     actions = [
+      # Lets a social sign-in account add a password. It sets any user's password without the current
+      # one, so the calling service must decide who may use it.
+      "cognito-idp:AdminSetUserPassword",
       "cognito-idp:AdminUpdateUserAttributes",
       "cognito-idp:ListUsers"
     ]
