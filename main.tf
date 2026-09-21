@@ -70,11 +70,10 @@ resource "aws_cognito_user_pool_client" "user_pool" {
   allowed_oauth_flows                  = ["code"]
   allowed_oauth_scopes                 = var.google_auth != null ? split(" ", var.google_auth.authorized_scopes) : ["openid", "email"]
 
-  # Pinned rather than left to default. A federated account never takes the email sign-in alias, so an
-  # account that federated first and added a password later can only authenticate by its provider
-  # username; callers recover by catching UserNotFoundException and resolving the email to that
-  # username. ENABLED collapses that into NotAuthorizedException, which would silently strip email
-  # sign-in from those accounts. Hardening this is a deliberate trade against that flow, not a flip.
+  # Pinned rather than left to default, so any change is deliberate. A federated account never takes the
+  # email sign-in alias, so an account that federated first and added a password later authenticates
+  # only by its provider username. Callers resolve the email to that username after any failed attempt,
+  # not only UserNotFoundException, so ENABLED would not break that flow.
   prevent_user_existence_errors = "LEGACY"
 
   # supported_identity_providers lists providers by name without referencing their resources, so
@@ -148,6 +147,9 @@ data "aws_iam_policy_document" "user_pool" {
   statement {
     effect = "Allow"
     actions = [
+      # Lets a social sign-in account add a password. It sets any user's password without the current
+      # one, so the calling service must decide who may use it.
+      "cognito-idp:AdminSetUserPassword",
       "cognito-idp:AdminUpdateUserAttributes",
       "cognito-idp:ListUsers"
     ]
