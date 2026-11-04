@@ -131,13 +131,12 @@ resource "aws_cognito_identity_provider" "apple" {
     private_key      = var.apple_auth.private_key
   }
 
-  # The user pool marks given_name and family_name required, so the mapping must supply them or
-  # CreateIdentityProvider is rejected. Apple returns the name only on the first authorization (via
-  # the requested name scope) and Cognito captures it there; email and sub are the stable claims.
+  # The user pool requires given_name and family_name, so the mapping must supply them. Cognito names
+  # Apple's attributes firstName and lastName; Apple sends them only on the first authorization.
   attribute_mapping = {
     email       = "email"
-    given_name  = "given_name"
-    family_name = "family_name"
+    given_name  = "firstName"
+    family_name = "lastName"
     username    = "sub"
   }
 }
