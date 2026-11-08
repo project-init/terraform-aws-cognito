@@ -106,13 +106,16 @@ resource "aws_cognito_identity_provider" "google" {
     token_url                     = "https://www.googleapis.com/oauth2/v4/token"
   }
 
+  # Cognito re-applies the mapping on every federated sign-in and resets an unmapped email_verified to
+  # false, which blocks password sign-in and recovery for a federated principal that has a password.
   attribute_mapping = {
-    email        = "email"
-    given_name   = "given_name"
-    family_name  = "family_name"
-    phone_number = "phoneNumbers"
-    birthdate    = "birthdays"
-    username     = "sub"
+    email          = "email"
+    email_verified = "email_verified"
+    given_name     = "given_name"
+    family_name    = "family_name"
+    phone_number   = "phoneNumbers"
+    birthdate      = "birthdays"
+    username       = "sub"
   }
 }
 
@@ -132,12 +135,14 @@ resource "aws_cognito_identity_provider" "apple" {
   }
 
   # The user pool requires given_name and family_name, so the mapping must supply them. Cognito names
-  # Apple's attributes firstName and lastName; Apple sends them only on the first authorization.
+  # Apple's attributes firstName and lastName; Apple sends them only on the first authorization. Map
+  # email_verified too, or each sign-in marks the email unverified.
   attribute_mapping = {
-    email       = "email"
-    given_name  = "firstName"
-    family_name = "lastName"
-    username    = "sub"
+    email          = "email"
+    email_verified = "email_verified"
+    given_name     = "firstName"
+    family_name    = "lastName"
+    username       = "sub"
   }
 }
 
